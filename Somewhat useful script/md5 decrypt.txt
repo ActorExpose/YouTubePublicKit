@@ -1,0 +1,31 @@
+#!/usr/bin/perl
+
+use LWP::UserAgent;
+use HTTP::Response;
+
+# MD5 decrypter using md5.darkbyte.ru API
+# by KoubackTr
+# http://koubacktr.wordpress.com/
+# http://twitter.com/kouback_tr_
+
+print <<banner;
+\t\t\t\t---------------------------------
+\t\t\t\t[[[[[[[[[ MD5 Decrypter ]]]]]]]]]
+\t\t\t\t\---------------------------------
+\n\t\t\t\t\t\t\t\t\t\t By KoubackTr - 2013
+\n\t\t\t\t http://koubacktr.wordpress.com/
+
+banner
+
+$hash=$ARGV[0] or
+die "Use:\n".
+"Crypt: code.pl <AnyValue>\n".
+"Decrypt: code.pl <HashMD5valid>\n";
+
+
+if(api){
+# API do md5.darkbyte.ru #
+$agente = LWP::UserAgent->new();
+$dec = $agente->get("http://md5.darkbyte.ru/api.php?q=$hash");
+print "[API] response: \t\t".$dec->content()."\n";
+}

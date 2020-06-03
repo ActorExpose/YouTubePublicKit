@@ -1,0 +1,45 @@
+#!/usr/bin/lua
+
+-- PORT SCANNER IN LUA --
+
+--[[
+
+r0xScan
+Coded by KoubackTR
+
+http://www.koubacktr.com/
+http://twitter.com/kouback_tr_
+
+]]--
+
+require('socket')
+
+print([[
+       ___        _____   {By @Kouback_TR_}
+      / _ \      / ____|
+ _ __| | | |_  _| (___   ___ __ _ _ __ v 1.0
+| '__| | | \ \/ /\___ \ / __/ _` | '_ \
+| |  | |_| |>  < ____) | (_| (_| | | | |
+|_|   \___//_/\_\_____/ \___\__,_|_| |_|
+
+Use: r0xScan <host/ip>
+]])
+
+alvo = (arg[1]) or os.exit()
+
+local hostname = socket.dns.tohostname(alvo)
+local ip = socket.dns.toip(alvo)
+
+print('[!] Starting r0xScan ...')
+print('Scanning ports on [',alvo,']')
+print('')
+print('Hostname: [',hostname,']')
+print('IP:       [',ip,']')
+print('')
+
+ports = 0
+while 1000 do
+ports = ports + 1;
+
+local scan = socket.connect(alvo,ports)
+if scan then

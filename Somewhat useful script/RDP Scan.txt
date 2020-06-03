@@ -1,0 +1,40 @@
+#!/usr/bin/perl
+
+#~  RDP Scanning
+#~  Code by KoubackTr
+#~  http://koubacktr.wordpress.com
+#~  http://twitter.com/kouback_tr_
+
+#~  LearnersOFcuriosity - 2013
+
+use IO::Socket::INET;
+use Term::ANSIColor;
+
+system('clear');
+print <<RDP;
+==============[RDP Range Scanner]===============
+By \@Kouback_TR_
+http://koubacktr.wordpress.com
+================================================
+RDP
+$use="\n -USE <range> <host inicial> <host final> \n -EX: code.pl 192.168.0 200 255 \n -(find hosts 200 to 255 in range 192.168.0)\n\n";
+my $range=$ARGV[0] || die "$use";
+my $ini=$ARGV[1] || die "$use";
+my $fini=$ARGV[2] || die "$use";
+
+for($for=$ini; $for<=$fini; $for++){
+
+$host=("$range.$for");
+
+#print"[!]Scanning RDP in $host\n";
+print color 'red';
+$scan=IO::Socket::INET->new(
+PeerAddr=>"$host",
+PeerPort=>"3389", #RDP DEFAULT PORT
+Timeout=>"1",
+Proto=>"tcp") or print "[!][DOWN/OFF]"; # TYPE TCP
+
+print color 'reset';
+print" RDP HOST > "; print color 'bold magenta'; print"$host !!\n";
+print color 'reset';
+}

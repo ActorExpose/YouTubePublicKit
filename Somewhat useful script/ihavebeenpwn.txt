@@ -1,0 +1,53 @@
+#!/usr/bin/perl
+
+
+# Pwned Search, tool in perl for pwned email information
+# by KoubackTr - 2014
+# http://koubacktr.wordporess.com/
+# http://twitter.com/kouback_tr_/
+#
+# Greats: @unknown_br, @Atena_Unknown, @MandrivaL, @aceeeeeeeer, @FPS_Conan, @unknown_antisec, @BL4DE_, @byCrazyDuck, and all friends of #LoC !!
+#
+
+use Term::ANSIColor;
+print color 'bold cyan';
+print <<pwnsearch;
+
+'||''|.                       ____      '||      .|'''.|                                  '||
+||   || ... ... ... .. ...   ` //    .. ||      ||..  '    ....   ....   ... ..    ....   || ..
+||...|'  ||  ||  |   ||  ||   //   .'  '||       ''|||.  .|...|| '' .||   ||' '' .|   ''  ||' ||
+||        ||| |||    ||  ||   ''   |.   ||     .     '|| ||      .|' ||   ||     ||       ||  ||
+.||.        |   |    .||. ||.   ))  '|..'||.    |'....|'   '|...' '|..'|' .||.     '|...' .||. ||.
+//                (by KoubackTr) v1.0
+/'
+
+pwnsearch
+print color 'reset';
+$email=$ARGV[0] || die "\t\t\t[!] Enter a valid email for search.\n       code.pl <email_address>\n\n";
+
+my @API="http://haveibeenpwned.com/api/breachedaccount/";
+
+use LWP::UserAgent;
+
+my $agent = LWP::UserAgent->new;
+$agent->agent("Pwn3d Search/1.0 (by KoubackTr, #LoC)");
+
+$search = HTTP::Request->new(GET => "@API/$email/");
+$result = $agent->request($search);
+
+if ($result->is_success) {
+print color 'bold red';
+print "\n";
+print "\t\t\t[ALERT!] Sorry your email $email have been pwned ";
+print $result->content;
+print "\n\n";
+print color 'reset';
+}
+else {
+print color 'bold green';
+print "\n";
+print "\t\t\t[SECURE!] Yahhh! your email is not pwned !! ";
+print $result->status_line,"\n\n";
+print color 'reset';
+}
+

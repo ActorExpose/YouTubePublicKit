@@ -1,0 +1,39 @@
+#!/usr/bin/perl -w
+
+use WWW::Mechanize;
+use Term::ANSIColor;
+
+# This crawler find only link #
+
+print"\n";
+print color('yellow');
+print <<WcraW;
+W.CraW Web crawler v1.0
+ __    __   ___          __    __
+/ / /\\ \\ \\ / __\\ __ __ _/ / /\\ \\ \\
+\\ \\/  \\/ // / | '__/ _` \\ \\/  \\/ /
+ \\  /\\  // /__| | | (_| |\\  /\\  /
+  \\/  \\(_)____/_|  \\__,_| \\/  \\/
+
+By KoubackTr - http://twitter.com/kouback_tr_
+WcraW
+#####################//#####################
+print"\n";
+print color('reset');
+print color('green');
+print"";
+
+print"[!]Use EXEMPLE http://www.google.com/ \n";
+print"[+]Target>> ";
+print color('reset');
+my $target = <STDIN>;
+
+my $craw = WWW::Mechanize->new();
+
+$craw->get($target);
+
+my @links = $craw->links();
+print"RESULTS:\n";
+print"====================================================\n";
+print $_->url."\n" foreach @links;
+print"====================================================\n";

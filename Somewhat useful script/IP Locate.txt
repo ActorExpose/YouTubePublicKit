@@ -1,0 +1,49 @@
+#!/usr/bin/perl
+ 
+use Socket;
+use Term::ANSIColor;
+use WWW::Mechanize;
+use JSON;
+ 
+# Information from IP or host v 2.1, now for all system with Perl.
+# don't using curl, now using Mechanize and JSON !.
+ 
+# Code by KoubackTr
+# koubacktr@gmail.com
+# https://koubacktr.wordpress.com/
+ 
+ 
+print color 'bold green';
+ 
+print q{
+----[IPloc - Location and info from IP address v2.1]----
+          By KoubackTr - koubacktr@gmail.com
+________________________________________________________
+ 
+};
+ 
+print color 'reset';
+@iphost=$ARGV[0] || die "Use: IPloc <host/ip> \nEx:  IPloc www.google.com \n     IPloc 74.125.224.208\n \n";
+my @ip = inet_ntoa(scalar gethostbyname("@iphost")or die "IP or Host invalid!\n");
+my @hn = scalar gethostbyaddr(inet_aton(@ip),AF_INET);
+ 
+my $GET=WWW::Mechanize->new();
+    $GET->get("http://ip-api.com/json/@ip"); # JSON API OF IP-API.COM
+    my $json = $GET->content();
+ 
+ 
+my $info = decode_json($json);
+ 
+# INFOS OF JSON API ...
+ 
+print "  [!] IP: ", $info->{'query'}, "\n";
+print "  ------------------------\n"; 
+print "  [+] ORG: ", $info->{'as'}, "\n";
+print "  [+] ISP: ", $info->{'isp'}, "\n";
+print "  [+] Country: ", $info->{'country'}," - ", $info->{'countryCode'}, "\n";
+print "  [+] City: ", $info->{'city'}, "\n";
+print "  [+] Region: ", $info->{'regionName'}, " - " , $info->{'region'}, "\n";
+print "  [+] Geo: ", "Lat: " , $info->{'lat'}, " - Long: ", $info->{'lon'}, "\n";
+#print "  [+] Zip: ", $info->{'zip'}, "\n"; 
+print "\n";
+## BYE ... LIVE LIVE AND PROSPER... PERL
